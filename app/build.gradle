@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.gitmadfitness'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.gitmadfitness"
@@ -50,4 +50,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation "androidx.compose.material3:material3:$material3_version"
 }
