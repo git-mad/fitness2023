@@ -1,4 +1,4 @@
-package com.example.gitmadfitness
+package com.example.appprototype
 
 import org.junit.Test
 
