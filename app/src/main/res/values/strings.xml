@@ -13,6 +13,8 @@
     <string name="enter_email">Email </string>
     <string name="enter_password">Password</string>
     <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="sign_up">Don\'t have an account yet? Sign up here!</string>
+    <string name="btn_sign_up">Sign Up</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

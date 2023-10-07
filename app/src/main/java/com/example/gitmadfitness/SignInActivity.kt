@@ -44,9 +44,30 @@ class SignInActivity : AppCompatActivity() {
                 }
         }
 
+        // add sign up button functionality
+        binding.btnSignUp.setOnClickListener {
+            val email = binding.etEmailSignUp.text.toString()
+            val password = binding.etPasswordSignUp.text.toString()
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Sign in successful")
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Invalid email and password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
     }
 
     companion object {
-        val TAG = "SIGN-IN:"
+        val TAG = "SIGN-IN"
     }
 }

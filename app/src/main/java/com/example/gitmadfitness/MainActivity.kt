@@ -2,6 +2,7 @@ package com.example.gitmadfitness
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         auth = Firebase.auth
+        Log.d("AUTH", "created auth")
         if (auth.currentUser == null) {
+            Log.d("AUTH", "User not logged in")
             startActivity(Intent(this, SignInActivity::class.java))
             finish()
             return
@@ -52,6 +55,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Log.d("AUTH", "User not logged in")
+            startActivity(Intent(this, SignInActivity::class.java))
+            finish()
+            return
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
