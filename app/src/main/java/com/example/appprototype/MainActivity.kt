@@ -54,6 +54,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
 import com.example.appprototype.ui.homePage
+import com.example.appprototype.ui.profileScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,6 +148,9 @@ fun ScaffoldExample(
             }
             composable("Favorites"){
                 favoritesPage()
+            }
+            composable("ProfileScreen"){
+                profileScreen()
             }
         }
     }

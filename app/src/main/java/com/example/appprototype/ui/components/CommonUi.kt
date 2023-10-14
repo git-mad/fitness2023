@@ -1,6 +1,7 @@
 package com.example.appprototype.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,7 +33,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.appprototype.R
+import com.example.appprototype.ui.homePage
+import com.example.appprototype.ui.profileScreen
 import java.nio.file.WatchEvent
 
 val provider = GoogleFont.Provider(
@@ -116,13 +122,17 @@ fun ProfileCard(name: String, workoutType: String, weekdays: String){
 
 @Preview
 @Composable
-fun ProfileCard2(){
+fun ProfileCard2(navController: NavHostController = rememberNavController()){
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .height(104.dp)
+            .clickable(onClick = {
+                navController.navigate("ProfileScreen");
+            })
+            .background(Color.White)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
@@ -136,15 +146,15 @@ fun ProfileCard2(){
                 verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                .width(56.dp)
-                .height(56.dp)
+                    .width(80.dp)
+                    .height(80.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                     verticalAlignment = Alignment.Top,
                     modifier = Modifier
-                        .width(56.dp)
-                        .height(56.dp)
+                        .width(80.dp)
+                        .height(80.dp)
                 ) {
                     Image(
                         painter = painterResource(R.drawable.ic_launcher_background),
@@ -152,8 +162,9 @@ fun ProfileCard2(){
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .padding(0.dp)
-                            .width(56.dp)
-                            .height(56.dp)
+                            .width(80.dp)
+                            .height(80.dp)
+                            .clip(CircleShape)
                     )
                 }
             }
@@ -161,11 +172,11 @@ fun ProfileCard2(){
                 verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                .width(248.dp)
-                .height(80.dp)
+                    .width(248.dp)
+                    .height(80.dp)
             ) {
                 Text(
-                    text = "Overline",
+                    text = "M T W T F",
                     style = TextStyle(
                         fontSize = 12.sp,
                         lineHeight = 16.sp,
@@ -175,15 +186,14 @@ fun ProfileCard2(){
                         letterSpacing = 0.5.sp,
                     ),
                     modifier = Modifier
-                    .width(248.dp)
-                    .height(16.dp)
+                        .width(248.dp)
+                        .height(14.dp)
                 )
                 Text(
-                    text = "List item",
-// M3/body/large
+                    text = "Anne Joe",
                     style = TextStyle(
-                        fontSize = 16.sp,
-                        lineHeight = 24.sp,
+                        fontSize = 28.sp,
+                        lineHeight = 32.sp,
                         fontFamily = fontFamily,
                         fontWeight = FontWeight(400),
                         color = Color(0xFF191C1D),
@@ -191,13 +201,13 @@ fun ProfileCard2(){
                         letterSpacing = 0.5.sp,
                     ),
                     modifier = Modifier
-                    .width(248.dp)
-                    .height(24.dp)
+                        .width(248.dp)
+                        .height(36.dp)
                 )
                 Text(
-                    text = "Supporting line text lorem ipsum dolor sit amet, consectetur.",
+                    text = "Weightlifting",
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         lineHeight = 20.sp,
                         fontFamily = fontFamily,
                         fontWeight = FontWeight(400),
@@ -205,8 +215,8 @@ fun ProfileCard2(){
                         letterSpacing = 0.25.sp,
                     ),
                     modifier = Modifier
-                    .width(248.dp)
-                    .height(40.dp)
+                        .width(248.dp)
+                        .height(40.dp)
                 )
             }
         }
