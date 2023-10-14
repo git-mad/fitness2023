@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.appprototype"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.appprototype"
@@ -67,4 +67,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.0")
 }

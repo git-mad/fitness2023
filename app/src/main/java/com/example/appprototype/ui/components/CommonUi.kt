@@ -2,10 +2,14 @@ package com.example.appprototype.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -14,13 +18,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appprototype.R
+import java.nio.file.WatchEvent
 
+val provider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
+)
+
+val fontName = GoogleFont("Roboto")
+
+val fontFamily = FontFamily(
+    Font(googleFont = fontName, fontProvider = provider)
+)
 @Composable
 fun ProfileCard(name: String, workoutType: String, weekdays: String){
     ElevatedCard(elevation = CardDefaults.cardElevation(
@@ -86,5 +111,104 @@ fun ProfileCard(name: String, workoutType: String, weekdays: String){
             }
         }
 
+    }
+}
+
+@Preview
+@Composable
+fun ProfileCard2(){
+    Column(
+        verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(104.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            verticalAlignment = Alignment.Top,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(104.dp)
+                .padding(start = 16.dp, top = 12.dp, end = 24.dp, bottom = 12.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                .width(56.dp)
+                .height(56.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .width(56.dp)
+                        .height(56.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher_background),
+                        contentDescription = "image description",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .padding(0.dp)
+                            .width(56.dp)
+                            .height(56.dp)
+                    )
+                }
+            }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                .width(248.dp)
+                .height(80.dp)
+            ) {
+                Text(
+                    text = "Overline",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFF49454F),
+                        letterSpacing = 0.5.sp,
+                    ),
+                    modifier = Modifier
+                    .width(248.dp)
+                    .height(16.dp)
+                )
+                Text(
+                    text = "List item",
+// M3/body/large
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        lineHeight = 24.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF191C1D),
+
+                        letterSpacing = 0.5.sp,
+                    ),
+                    modifier = Modifier
+                    .width(248.dp)
+                    .height(24.dp)
+                )
+                Text(
+                    text = "Supporting line text lorem ipsum dolor sit amet, consectetur.",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF49454F),
+                        letterSpacing = 0.25.sp,
+                    ),
+                    modifier = Modifier
+                    .width(248.dp)
+                    .height(40.dp)
+                )
+            }
+        }
     }
 }
