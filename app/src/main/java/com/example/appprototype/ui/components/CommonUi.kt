@@ -79,7 +79,7 @@ fun ProfileCard2(navigateToProfileScreen: () -> Unit){
                         .height(80.dp)
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.ic_launcher_background),
+                        painter = painterResource(R.drawable.default_profile_icon),
                         contentDescription = "image description",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier

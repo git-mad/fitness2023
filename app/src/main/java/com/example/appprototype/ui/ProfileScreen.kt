@@ -45,7 +45,7 @@ fun ProfileImage(resID: Int) {
 @Preview
 fun profileScreen() {
     Column {
-        ProfileImage(resID = R.drawable.ic_launcher_background)
+        ProfileImage(resID = R.drawable.default_profile_icon)
         Column (
             modifier = Modifier
                 .padding(10.dp),

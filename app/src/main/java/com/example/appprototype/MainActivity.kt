@@ -29,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +48,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -116,6 +118,7 @@ fun ScaffoldExample(
         skipPartiallyExpanded = true
     )
     var showProfileSheet by remember { mutableStateOf(false) }
+    val showFab = mainViewModel.showFab.observeAsState()
 
     val items = listOf(
         NavigationItem(
@@ -149,7 +152,7 @@ fun ScaffoldExample(
                         verticalAlignment = Alignment.Top,
                     ) {
                         Image(
-                            painter = painterResource(R.drawable.ic_launcher_background),
+                            painter = painterResource(R.drawable.default_profile_icon),
                             contentDescription = "image description",
                             contentScale = ContentScale.FillBounds,
                             modifier = Modifier
@@ -205,7 +208,14 @@ fun ScaffoldExample(
                     }
                 )
             },
-            bottomBar = { BottomNavigationBar(mainViewModel = mainViewModel) }
+            bottomBar = { BottomNavigationBar(mainViewModel = mainViewModel) },
+            floatingActionButton = {
+                if (showFab.value!!){
+                    FloatingActionButton(onClick = { /*TODO*/ }) {
+                        Icon(ImageVector.vectorResource(R.drawable.filter_list), contentDescription = "Filter List")
+                    }
+                }
+            }
         ) { innerPadding ->
             Surface(
                 modifier = Modifier.padding(innerPadding),
