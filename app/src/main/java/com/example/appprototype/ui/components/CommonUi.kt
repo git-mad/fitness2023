@@ -24,22 +24,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.appprototype.R
-import com.example.appprototype.ui.homePage
-import com.example.appprototype.ui.profileScreen
-import java.nio.file.WatchEvent
 
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -52,86 +44,16 @@ val fontName = GoogleFont("Roboto")
 val fontFamily = FontFamily(
     Font(googleFont = fontName, fontProvider = provider)
 )
-@Composable
-fun ProfileCard(name: String, workoutType: String, weekdays: String){
-    ElevatedCard(elevation = CardDefaults.cardElevation(
-        defaultElevation = 6.dp
-    ),
-        modifier = Modifier
-            .size(LocalConfiguration.current.screenWidthDp.dp - 20.dp, 160.dp)
-            .clickable {}
-            .padding(vertical = 8.dp)){
-        Row(modifier = Modifier
-            .padding(start = 10.dp,
-                top = 20.dp,
-                bottom = 20.dp,
-                end = 10.dp
-            )
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(100.dp, 100.dp)
-                    .align(Alignment.CenterVertically)
-                    .clip(CircleShape)
-            )
-            Column (modifier = Modifier
-            ) {
-                Text(
-                    name,
-                    modifier = Modifier
-                        .padding(
-                            start = 10.dp,
-                            top = 4.dp,
-                            bottom = 4.dp,
-                            end = 10.dp
-                        ),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
-                )
-                Text(
-                    workoutType,
-                    modifier = Modifier
-                        .padding(
-                            start = 10.dp,
-                            top = 4.dp,
-                            bottom = 4.dp,
-                            end = 10.dp
-                        ),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
-                )
-                Text(
-                    weekdays,
-                    modifier = Modifier
-                        .padding(
-                            start = 10.dp,
-                            top = 4.dp,
-                            bottom = 4.dp,
-                            end = 10.dp
-                        ),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
-                )
-            }
-        }
 
-    }
-}
-
-@Preview
 @Composable
-fun ProfileCard2(navController: NavHostController = rememberNavController()){
+fun ProfileCard2(navigateToProfileScreen: () -> Unit){
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .height(104.dp)
-            .clickable(onClick = {
-                navController.navigate("ProfileScreen");
-            })
+            .clickable(onClick = navigateToProfileScreen)
             .background(Color.White)
     ) {
         Row(
