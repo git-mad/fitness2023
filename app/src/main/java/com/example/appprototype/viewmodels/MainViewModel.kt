@@ -14,7 +14,7 @@ sealed class Screen(val route: String, val friendlyName : String) {
 
     object Messages : Screen("messages", "Messages")
 
-    object Favorites : Screen("Favorites", "Favorites")
+    object Favorites : Screen("favorites", "Favorites")
 }
 
 class MainViewModel : ViewModel() {

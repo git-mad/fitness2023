@@ -1,4 +1,6 @@
 package com.example.appprototype.models
 
-class Profile (name: String, ){
+
+open class Profile (profileID: String, name: String, schedule: String, interests: String, mainGym: String, description: String){
+
 }

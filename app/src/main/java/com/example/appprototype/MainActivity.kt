@@ -324,7 +324,7 @@ fun BottomNavigationBar(mainViewModel: MainViewModel) {
         NavigationBarItem(
             selected = currentScreen is Screen.Messages,
             onClick = {mainViewModel.navigateTo(Screen.Messages)},
-            icon = {Icon(painterResource(id = R.drawable.chat), contentDescription = "Messages")},
+            icon = {Icon(painterResource(id = R.drawable.baseline_chat_24), contentDescription = "Messages")},
             label = { Text("Messages") }
         )
         NavigationBarItem(

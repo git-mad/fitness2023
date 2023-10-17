@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.appprototype.ui.components.ProfileCard2
+import com.example.appprototype.ui.components.profileCard
 
 @Composable
 fun HomeScreen(onNavigateToProfileScreen: () -> Unit){
@@ -13,12 +13,12 @@ fun HomeScreen(onNavigateToProfileScreen: () -> Unit){
         verticalArrangement = Arrangement.spacedBy(100.dp)
     ){
         item (){
-            ProfileCard2(onNavigateToProfileScreen)
-            ProfileCard2(onNavigateToProfileScreen)
-            ProfileCard2(onNavigateToProfileScreen)
-            ProfileCard2(onNavigateToProfileScreen)
-            ProfileCard2(onNavigateToProfileScreen)
-            ProfileCard2(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
+            profileCard(onNavigateToProfileScreen)
         }
     }
 }
