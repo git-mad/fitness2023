@@ -1,32 +1,80 @@
 package com.example.appprototype.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.appprototype.ui.components.ProfileCard
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appprototype.models.Profile
+import com.example.appprototype.ui.components.profileCard
+import com.example.appprototype.viewmodels.HomeViewModel
+import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
+import eu.bambooapps.material3.pullrefresh.pullRefresh
+import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun homePage(){
-    LazyColumn(modifier = Modifier
-        .padding(10.dp),
-        verticalArrangement = Arrangement.spacedBy(100.dp)
-    ){
-        item (){
-            ProfileCard("Johnny Appleseed", "Cardio", "M W F")
-            ProfileCard("John Doe", "Bodybuilding", "U T Th S")
-            ProfileCard("Jane Doe", "Calisthenics", "T T S")
-            ProfileCard("Alice Johnson", "Yoga", "M W F")
-            ProfileCard("Bob Smith", "Pilates", "T Th S")
-            ProfileCard("Cathy Williams", "Aerobics", "M T W")
-            ProfileCard("David Lee", "Martial Arts", "M W F")
-            ProfileCard("Eva Rodriguez", "Cycling", "T Th S")
-            ProfileCard("Frank Murphy", "Running", "W F S")
-            ProfileCard("Grace Kim", "Swimming", "M T W")
-            ProfileCard("Hank Green", "Weightlifting", "U T Th S")
+fun HomeScreen(viewModel: HomeViewModel = viewModel()){
+    val profileList by viewModel.fetchedProfileList.observeAsState(initial = mutableListOf())
+    val showProfileSheet by viewModel.showProfileSheet.observeAsState()
+    val isFetching by viewModel.isFetching.observeAsState()
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isFetching!!,
+        onRefresh = { viewModel.resetList() }
+    )
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+    viewModel.listUpToDate.observe(LocalLifecycleOwner.current) {
+        if (it == false) {
+            viewModel.fetchList()
         }
+    }
+
+    Box(Modifier.pullRefresh(pullRefreshState)) {
+        LazyColumn(modifier = Modifier,
+            //verticalArrangement = Arrangement.spacedBy(100.dp)
+        ){
+            items(profileList) {profile ->
+                profileCard(
+                    onClick = {
+                        viewModel.viewedProfile.value = profile
+                        viewModel.showSheet()
+                    },
+                    profile = profile
+                )
+            }
+        }
+        PullRefreshIndicator(
+            refreshing = isFetching!!,
+            state = pullRefreshState,
+            Modifier.align(
+                Alignment.TopCenter
+            )
+        )
+    }
+    if (showProfileSheet == true) {
+        ProfileSheet(viewModel.viewedProfile.value, viewModel, sheetState)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfileSheet(profile: Profile?, viewModel: HomeViewModel, sheetState: SheetState) {
+    ModalBottomSheet(
+        onDismissRequest = { viewModel.hideSheet() },
+        sheetState = sheetState
+    ) {
+        ProfileScreen(profile ?: Profile())
+        println("showSheet Value: " + viewModel.showProfileSheet.value)
     }
 }
