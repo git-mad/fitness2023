@@ -27,6 +27,7 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appprototype.R
+import com.example.appprototype.models.Profile
 
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -41,14 +42,14 @@ val fontFamily = FontFamily(
 )
 
 @Composable
-fun profileCard(navigateToProfileScreen: () -> Unit){
+fun profileCard(onClick: () -> Unit, profile: Profile){
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .height(104.dp)
-            .clickable(onClick = navigateToProfileScreen)
+            .clickable(onClick = onClick)
             .background(Color.White)
     ) {
         Row(
@@ -75,7 +76,7 @@ fun profileCard(navigateToProfileScreen: () -> Unit){
                 ) {
                     Image(
                         painter = painterResource(R.drawable.default_profile_icon),
-                        contentDescription = "image description",
+                        contentDescription = "User Icon",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .padding(0.dp)
@@ -93,7 +94,7 @@ fun profileCard(navigateToProfileScreen: () -> Unit){
                     .height(80.dp)
             ) {
                 Text(
-                    text = "M T W T F",
+                    text = profile.schedule,
                     style = TextStyle(
                         fontSize = 12.sp,
                         lineHeight = 16.sp,
@@ -107,7 +108,7 @@ fun profileCard(navigateToProfileScreen: () -> Unit){
                         .height(14.dp)
                 )
                 Text(
-                    text = "Anne Joe",
+                    text = profile.name,
                     style = TextStyle(
                         fontSize = 28.sp,
                         lineHeight = 32.sp,
@@ -122,7 +123,7 @@ fun profileCard(navigateToProfileScreen: () -> Unit){
                         .height(36.dp)
                 )
                 Text(
-                    text = "Weightlifting",
+                    text = profile.interests,
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 20.sp,

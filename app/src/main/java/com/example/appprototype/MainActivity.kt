@@ -85,6 +85,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.appprototype.models.Profile
+import com.example.appprototype.models.User
 import com.example.appprototype.ui.HomeScreen
 import com.example.appprototype.ui.MessagesScreen
 import com.example.appprototype.ui.components.NavigationItem
@@ -124,12 +126,10 @@ fun ScaffoldExample(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Home)
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
     var showProfileSheet by remember { mutableStateOf(false) }
+    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Home)
     val showFab = mainViewModel.showFab.observeAsState()
+    val user by mainViewModel.user.observeAsState()
 
     val items = listOf(
         NavigationItem(
@@ -186,7 +186,7 @@ fun ScaffoldExample(
                         )
                     }
                     Text(
-                        text = "Anne Joe",
+                        text = user!!.getDetails().name,
                         style = TextStyle(
                             fontSize = 28.sp,
                             lineHeight = 32.sp,
@@ -245,9 +245,7 @@ fun ScaffoldExample(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 when (currentScreen) {
-                    is Screen.Home -> HomeScreen {
-                        showProfileSheet = true
-                    }
+                    is Screen.Home -> HomeScreen ()
 
                     is Screen.Messages -> MessagesScreen()
 
@@ -255,57 +253,7 @@ fun ScaffoldExample(
                 }
             }
             if (showProfileSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showProfileSheet = false },
-                    sheetState = sheetState
-                ) {
-                    profileScreen()
-                }
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ProfileScreen(onBack: () -> Unit) {
-    TopAppBar(
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = null)
-            }
-        },
-        title = { Text("Profile") }
-    )
-    profileScreen()
-}
-
-@Composable
-fun favoritesPage(){
-    Text("Hello World!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ScaffoldPreview(){
-    AppPrototypeTheme {
-        ScaffoldExample()
-    }
-}
-
-@Composable
-fun NavController.currentRoute(): String? {
-    val navBackStackEntry by this.currentBackStackEntryAsState()
-    return navBackStackEntry?.destination?.route
-}
-
-fun NavController.navigateSafe(route: String) {
-    if (currentDestination?.route != route) {
-        navigate(route) {
-            popUpTo(graph.startDestinationId){
-                saveState = true
-            }
-            restoreState = true
         }
     }
 }

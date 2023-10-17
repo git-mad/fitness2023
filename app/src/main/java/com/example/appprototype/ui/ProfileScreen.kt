@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appprototype.R
+import com.example.appprototype.models.Profile
 import com.example.appprototype.ui.components.fontFamily
 
 @Composable
@@ -53,8 +54,7 @@ fun ProfileImage(resID: Int) {
 }
 
 @Composable
-@Preview
-fun profileScreen() {
+fun profileScreen(profile: Profile) {
     Column {
         ProfileImage(resID = R.drawable.default_profile_icon)
         Column (
@@ -65,7 +65,7 @@ fun profileScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = "Anne Joe",
+                    text = profile.name,
                     style = TextStyle(
                         fontSize = 28.sp,
                         lineHeight = 28.sp,
@@ -79,7 +79,7 @@ fun profileScreen() {
                         .padding(end = 10.dp)
                 )
                 Text(
-                    text = "M T W T F",
+                    text = profile.schedule,
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 20.sp,
@@ -91,7 +91,7 @@ fun profileScreen() {
                 )
             }
             Text(
-                text = "Weightlifting",
+                text = profile.interests,
                 style = TextStyle(
                     fontSize = 16.sp,
                     lineHeight = 20.sp,
@@ -103,7 +103,7 @@ fun profileScreen() {
             )
 
             Text(
-                text = "I am looking for someone to help keep me accountable and make sure I stay on track with my goals. Preferably someone who can workout between 10am-12pm on MWF",
+                text = profile.description,
                 modifier = Modifier
                     .padding(top = 10.dp, bottom = 10.dp),
             )

@@ -20,6 +20,7 @@ class User private constructor(private var profile: Profile){
             instance ?: throw IllegalStateException("Instance not initialized")
     }
 
+    fun getDetails() : Profile = profile
 
 
 }

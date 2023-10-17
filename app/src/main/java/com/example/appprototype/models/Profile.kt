@@ -1,6 +1,6 @@
 package com.example.appprototype.models
 
 
-open class Profile (profileID: String, name: String, schedule: String, interests: String, mainGym: String, description: String){
+class Profile (val profileID: String = "-1", var name: String = "N/A", var schedule: String = "N/A", var interests: String = "N/A", var mainGym: String = "N/A", var description: String = "N/A"){
 
 }
