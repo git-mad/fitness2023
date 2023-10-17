@@ -12,13 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appprototype.R
@@ -54,7 +54,7 @@ fun ProfileImage(resID: Int) {
 }
 
 @Composable
-fun profileScreen(profile: Profile) {
+fun ProfileScreen(profile: Profile) {
     Column {
         ProfileImage(resID = R.drawable.default_profile_icon)
         Column (
@@ -101,6 +101,26 @@ fun profileScreen(profile: Profile) {
                     letterSpacing = 0.25.sp,
                 ),
             )
+
+            Row(Modifier.fillMaxWidth()
+                .padding(top = 5.dp, bottom = 5.dp)){
+                Image(
+                    Icons.Filled.LocationOn,
+                    contentDescription = "Location"
+                )
+                Text(
+                    text = profile.mainGym,
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        lineHeight = 20.sp,
+                        fontFamily = fontFamily,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF49454F),
+                        letterSpacing = 0.25.sp,
+                    ),
+                )
+            }
+
 
             Text(
                 text = profile.description,
