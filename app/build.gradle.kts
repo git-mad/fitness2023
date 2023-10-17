@@ -70,4 +70,5 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.2")
+    implementation("eu.bambooapps:compose-material3-pullrefresh:1.0.0")
 }

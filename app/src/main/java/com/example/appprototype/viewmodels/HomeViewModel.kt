@@ -1,8 +1,5 @@
 package com.example.appprototype.viewmodels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,17 +19,17 @@ class HomeViewModel : ViewModel() {
 
     private val _listUpToDate: MutableLiveData<Boolean> = MutableLiveData(false)
     val listUpToDate: LiveData<Boolean> = _listUpToDate
-    fun addToList(profile: Profile) {
+
+    private val _isFetching: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFetching: LiveData<Boolean> = _isFetching
+    private fun addToList(profile: Profile) {
         val currentList = _fetchedProfileList.value ?: mutableListOf()
         currentList.add(profile)
         _fetchedProfileList.value = currentList
     }
 
-    fun removeFromList(profile: Profile) {
-        _fetchedProfileList.value?.remove(profile)
-    }
-
     fun fetchList() {
+        _isFetching.value = true
         //Routine to get profiles from the data base
         //yadda yadda yadda
         val profileList = listOf(
@@ -63,6 +60,12 @@ class HomeViewModel : ViewModel() {
             println("Adding ID:" + profile.profileID + "to profileList")
         }
         _listUpToDate.value = true
+        _isFetching.value = false
+    }
+
+    fun resetList() {
+        _fetchedProfileList.value = mutableListOf()
+        _listUpToDate.value = false
     }
 
     fun hideSheet() {
@@ -71,6 +74,6 @@ class HomeViewModel : ViewModel() {
     }
 
     fun showSheet() {
-        _showProfileSheet.value = true;
+        _showProfileSheet.value = true
     }
 }
