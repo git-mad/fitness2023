@@ -22,6 +22,6 @@ fun SplashScreen(mainViewModel: MainViewModel) {
 
     // Your splash screen content goes here
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Welcome to AppPrototype", style = MaterialTheme.typography.displayMedium)
+        Text("Welcome to DuoFit", style = MaterialTheme.typography.displayMedium)
     }
 }
