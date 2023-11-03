@@ -56,10 +56,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appprototype.ui.FavoritesScreen
 import com.example.appprototype.ui.HomeScreen
+import com.example.appprototype.ui.LoginScreen
 import com.example.appprototype.ui.MessagesScreen
+import com.example.appprototype.ui.ProfileQuizScreen
+import com.example.appprototype.ui.RegistrationScreen
+import com.example.appprototype.ui.SplashScreen
 import com.example.appprototype.ui.components.NavigationItem
 import com.example.appprototype.ui.components.drawerSheet
 import com.example.appprototype.ui.components.fontFamily
@@ -95,7 +101,7 @@ fun ScaffoldExample(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Home)
+    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Splash)
     val showFab = mainViewModel.showFab.observeAsState()
     val user by mainViewModel.user.observeAsState()
 
@@ -184,7 +190,7 @@ fun ScaffoldExample(
                         actionIconContentColor = MaterialTheme.colorScheme.onSecondary,
                         scrolledContainerColor = MaterialTheme.colorScheme.onPrimaryContainer
                     ),
-                    title = { Text(text = currentScreen.friendlyName ) },
+                    title = { currentScreen.friendlyName },
                     navigationIcon = {
                         IconButton(
                             onClick = {
@@ -213,7 +219,11 @@ fun ScaffoldExample(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 when (currentScreen) {
-                    is Screen.Home -> HomeScreen ()
+                    is Screen.Splash -> SplashScreen(mainViewModel)
+                    is Screen.Login -> LoginScreen(mainViewModel)
+                    is Screen.Registration -> RegistrationScreen(mainViewModel)
+                    is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
+                    is Screen.Home -> HomeScreen()
                     is Screen.Messages -> MessagesScreen()
                     is Screen.Favorites -> FavoritesScreen()
                     else -> {}
@@ -236,7 +246,7 @@ fun BottomNavigationBar(mainViewModel: MainViewModel) {
         )
         NavigationBarItem(
             selected = currentScreen is Screen.Messages,
-            onClick = {mainViewModel.navigateTo(Screen.Messages)},
+            onClick = { mainViewModel.navigateTo(Screen.Messages) },
             icon = {Icon(painterResource(id = R.drawable.baseline_chat_24), contentDescription = "Messages")},
             label = { Text("Messages") }
         )
