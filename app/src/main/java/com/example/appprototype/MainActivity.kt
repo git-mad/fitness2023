@@ -224,7 +224,7 @@ fun ScaffoldExample(
                     is Screen.Registration -> RegistrationScreen(mainViewModel)
                     is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
                     is Screen.Home -> HomeScreen()
-                    is Screen.Messages -> MessagesScreen()
+                    is Screen.Messages -> MessagesScreen(mainViewModel)
                     is Screen.Favorites -> FavoritesScreen()
                     else -> {}
                 }
