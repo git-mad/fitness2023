@@ -27,6 +27,8 @@ import androidx.constraintlayout.compose.Visibility
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appprototype.viewmodels.MainViewModel
 import com.example.appprototype.viewmodels.Screen
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 
 @Composable
 @Preview
@@ -40,7 +42,7 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
         // Username field, password field, etc.
 
         TextField(
-            value = text, // TODO:
+            value = text,
             onValueChange = { text = it },
             label = { Text("Email") },
         )
@@ -55,15 +57,15 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
             visualTransformation =
             if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            trailingIcon = {
-//                IconButton(onClick = { passwordHidden = !passwordHidden }) {
-//                    val visibilityIcon =
-//                        if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-//                    // Please provide localized description for accessibility services
-//                    val description = if (passwordHidden) "Show password" else "Hide password"
-//                    Icon(imageVector = visibilityIcon, contentDescription = description)
-//                }
-//            }
+            trailingIcon = {
+                IconButton(onClick = { passwordHidden = !passwordHidden }) {
+                    val visibilityIcon =
+                        if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    // Please provide localized description for accessibility services
+                    val description = if (passwordHidden) "Show password" else "Hide password"
+                    Icon(imageVector = visibilityIcon, contentDescription = description)
+                }
+            }
         )
 
         Button(onClick = { mainViewModel.navigateTo(Screen.Registration) }) {

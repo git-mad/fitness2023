@@ -73,4 +73,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.3")
     implementation("eu.bambooapps:compose-material3-pullrefresh:1.0.0")
+    implementation("androidx.compose.material:material-icons-extended")
 }
