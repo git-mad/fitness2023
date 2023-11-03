@@ -18,6 +18,7 @@ fun SplashScreen(mainViewModel: MainViewModel) {
     LaunchedEffect(key1 = true) {
         delay(2000) // For a 2-second delay
         mainViewModel.navigateTo(Screen.Login)
+
     }
 
     // Your splash screen content goes here
