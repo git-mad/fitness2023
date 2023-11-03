@@ -24,4 +24,5 @@ fun SplashScreen(mainViewModel: MainViewModel) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text("Welcome to DuoFit", style = MaterialTheme.typography.displayMedium)
     }
+
 }
