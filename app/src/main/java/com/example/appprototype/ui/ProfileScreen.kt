@@ -18,6 +18,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,6 +59,7 @@ fun ProfileImage(resID: Int) {
 
 @Composable
 fun ProfileScreen(profile: Profile) {
+    var isStarred by remember { mutableStateOf(false) }
     Column {
         ProfileImage(resID = R.drawable.default_profile_icon)
         Column (
@@ -133,6 +138,7 @@ fun ProfileScreen(profile: Profile) {
                     .padding(top = 10.dp, bottom = 10.dp)
             ) {
                 Button(onClick = {
+                     isStarred = !isStarred
                 }, modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)
@@ -140,7 +146,8 @@ fun ProfileScreen(profile: Profile) {
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     shape = RectangleShape
                 ) {
-                    Image(ImageVector.vectorResource(R.drawable.star), "Add to Favorites")
+                    Image(ImageVector.vectorResource(if (isStarred) R.drawable.pinkstar else R.drawable.star),
+                        "Add to Favorites")
                 }
                 Spacer( modifier = Modifier.weight(1f,true))
                 Button(onClick = {
