@@ -77,11 +77,7 @@ fun ProfileSheet(profile: Profile?, viewModel: HomeViewModel, sheetState: SheetS
         sheetState = sheetState
     ) {
         ProfileScreen(
-            profile ?: Profile(),
-            onToggleFavorite =
-            { profile ->
-            viewModel.updateFavoriteStatus(profile)
-            }
+            profile ?: Profile()
         )
         println("showSheet Value: " + viewModel.showProfileSheet.value)
     }

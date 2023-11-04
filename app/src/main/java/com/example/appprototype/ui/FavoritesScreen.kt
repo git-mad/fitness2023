@@ -83,11 +83,7 @@ fun Test(profile: Profile?, viewModel: HomeViewModel, sheetState: SheetState) {
         sheetState = sheetState
     ) {
         profile?.let {
-            ProfileScreen(it, onToggleFavorite = { updatedProfile ->
-                // Implement the favorite toggle logic here
-                // This should update the ViewModel and hence the LiveData/StateFlow
-                viewModel.updateFavoriteStatus(updatedProfile)
-            })
+            ProfileScreen(it)
         }
     }
 }

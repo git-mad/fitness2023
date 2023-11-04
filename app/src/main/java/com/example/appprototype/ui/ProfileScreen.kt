@@ -61,7 +61,6 @@ fun ProfileImage(resID: Int) {
 @Composable
 fun ProfileScreen(
     profile: Profile,
-    onToggleFavorite: (Profile) -> Unit
 ) {
     var isStarred by remember { mutableStateOf(false) }
     isStarred = profile.isFavorite
