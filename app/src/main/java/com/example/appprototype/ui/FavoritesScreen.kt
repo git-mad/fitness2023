@@ -2,6 +2,9 @@ package com.example.appprototype.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -79,7 +82,12 @@ fun Test(profile: Profile?, viewModel: HomeViewModel, sheetState: SheetState) {
         onDismissRequest = { viewModel.hideSheet() },
         sheetState = sheetState
     ) {
-        ProfileScreen(profile ?: Profile())
-        println("showSheet Value: " + viewModel.showProfileSheet.value)
+        profile?.let {
+            ProfileScreen(it, onToggleFavorite = { updatedProfile ->
+                // Implement the favorite toggle logic here
+                // This should update the ViewModel and hence the LiveData/StateFlow
+                viewModel.updateFavoriteStatus(updatedProfile)
+            })
+        }
     }
 }

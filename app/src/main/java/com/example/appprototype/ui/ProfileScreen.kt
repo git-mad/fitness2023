@@ -40,6 +40,7 @@ import com.example.appprototype.ui.components.fontFamily
 
 @Composable
 fun ProfileImage(resID: Int) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,8 +59,12 @@ fun ProfileImage(resID: Int) {
 }
 
 @Composable
-fun ProfileScreen(profile: Profile) {
+fun ProfileScreen(
+    profile: Profile,
+    onToggleFavorite: (Profile) -> Unit
+) {
     var isStarred by remember { mutableStateOf(false) }
+    isStarred = profile.isFavorite
     Column {
         ProfileImage(resID = R.drawable.default_profile_icon)
         Column (
@@ -126,7 +131,6 @@ fun ProfileScreen(profile: Profile) {
                 )
             }
 
-
             Text(
                 text = profile.description,
                 modifier = Modifier
@@ -138,7 +142,8 @@ fun ProfileScreen(profile: Profile) {
                     .padding(top = 10.dp, bottom = 10.dp)
             ) {
                 Button(onClick = {
-                     isStarred = !isStarred
+                    profile.isFavorite = !profile.isFavorite
+                    isStarred = profile.isFavorite
                 }, modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)

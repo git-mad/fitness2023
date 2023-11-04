@@ -76,7 +76,13 @@ fun ProfileSheet(profile: Profile?, viewModel: HomeViewModel, sheetState: SheetS
         onDismissRequest = { viewModel.hideSheet() },
         sheetState = sheetState
     ) {
-        ProfileScreen(profile ?: Profile())
+        ProfileScreen(
+            profile ?: Profile(),
+            onToggleFavorite =
+            { profile ->
+            viewModel.updateFavoriteStatus(profile)
+            }
+        )
         println("showSheet Value: " + viewModel.showProfileSheet.value)
     }
 }

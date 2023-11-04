@@ -36,7 +36,7 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
 
     var password by rememberSaveable { mutableStateOf("") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
-    var text by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
 
     Box(
         contentAlignment = Alignment.Center, // This centers the content within the Box
@@ -46,8 +46,8 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
             // Username field, password field, etc.
 
             TextField(
-                value = text,
-                onValueChange = { text = it },
+                value = email,
+                onValueChange = { email = it },
                 label = { Text("Email") },
             )
 

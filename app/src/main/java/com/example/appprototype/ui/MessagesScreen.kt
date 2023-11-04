@@ -25,8 +25,4 @@ fun MessagesScreen(mainViewModel: MainViewModel) {
     ) {
         Text(text = "No Messages Available.", Modifier.align(Alignment.CenterHorizontally))
     }
-
-    Button(onClick = { mainViewModel.navigateTo(Screen.Home) }) {
-        Text("Go to Your Target Screen")
-    }
 }

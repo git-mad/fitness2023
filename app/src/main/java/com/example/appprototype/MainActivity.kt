@@ -195,7 +195,7 @@ fun ScaffoldExample(
                         actionIconContentColor = MaterialTheme.colorScheme.onSecondary,
                         scrolledContainerColor = MaterialTheme.colorScheme.onPrimaryContainer
                     ),
-                    title = { currentScreen.friendlyName },
+                    title = { Text(currentScreen.friendlyName) },
                     navigationIcon = {
                         IconButton(
                             onClick = {
