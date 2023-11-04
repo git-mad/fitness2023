@@ -77,8 +77,3 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
         }
     }
 }
-
-@Composable
-fun RegistrationScreen(mainViewModel: MainViewModel) {
-    // Create your registration form here
-}

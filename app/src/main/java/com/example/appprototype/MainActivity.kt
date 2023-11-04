@@ -102,6 +102,9 @@ fun ScaffoldExample(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Splash)
+
+    val isFeatureScreen = currentScreen is Screen.Home || currentScreen is Screen.Favorites || currentScreen is Screen.Messages
+
     val showFab = mainViewModel.showFab.observeAsState()
     val user by mainViewModel.user.observeAsState()
 
@@ -127,61 +130,63 @@ fun ScaffoldExample(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Column(
-                    modifier = Modifier
-                        .padding(20.dp)
-                ) {
-                    NavigationDrawerItem(
-                        label = {
-                            Image(Icons.Filled.ArrowBack, contentDescription = "Go Back")
-                        },
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        },
+            if (isFeatureScreen) {
+                ModalDrawerSheet {
+                    Column(
                         modifier = Modifier
-                            .width(60.dp)
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
-                        verticalAlignment = Alignment.Top,
+                            .padding(20.dp)
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.default_profile_icon),
-                            contentDescription = "User Profile",
-                            contentScale = ContentScale.FillBounds,
+                        NavigationDrawerItem(
+                            label = {
+                                Image(Icons.Filled.ArrowBack, contentDescription = "Go Back")
+                            },
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            },
                             modifier = Modifier
-                                .width(128.dp)
-                                .height(128.dp)
-                                .clip(CircleShape)
+                                .width(60.dp)
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                            verticalAlignment = Alignment.Top,
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.default_profile_icon),
+                                contentDescription = "User Profile",
+                                contentScale = ContentScale.FillBounds,
+                                modifier = Modifier
+                                    .width(128.dp)
+                                    .height(128.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                        Text(
+                            text = user!!.getDetails().name,
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                lineHeight = 32.sp,
+                                fontFamily = fontFamily,
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFF191C1D),
+
+                                letterSpacing = 0.5.sp,
+                            ),
+                            modifier = Modifier
+                                .width(248.dp)
+                                .height(36.dp)
                         )
                     }
-                    Text(
-                        text = user!!.getDetails().name,
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                            lineHeight = 32.sp,
-                            fontFamily = fontFamily,
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF191C1D),
-
-                            letterSpacing = 0.5.sp,
-                        ),
-                        modifier = Modifier
-                            .width(248.dp)
-                            .height(36.dp)
-                    )
+                    drawerSheet(drawerState = drawerState, scope = scope, null, items, itemsBottom)
                 }
-                drawerSheet(drawerState = drawerState, scope = scope, null, items, itemsBottom)
             }
         },
-        gesturesEnabled = true
+        gesturesEnabled = isFeatureScreen
     ) {
         Scaffold(
-            topBar = {
+            topBar = { if (isFeatureScreen) {
                 TopAppBar(
                     colors = TopAppBarDefaults.largeTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -204,9 +209,11 @@ fun ScaffoldExample(
                             Icon(Icons.Default.Menu, contentDescription = null)
                         }
                     }
+
                 )
-            },
-            bottomBar = { BottomNavigationBar(mainViewModel = mainViewModel) },
+            }
+                     },
+            bottomBar = { if (isFeatureScreen) { BottomNavigationBar(mainViewModel = mainViewModel) } },
             floatingActionButton = {
                 if (showFab.value!!){
                     FloatingActionButton(onClick = { /*TODO*/ }) {
