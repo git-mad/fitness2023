@@ -1,5 +1,6 @@
 package com.example.appprototype.viewmodels
 
+import android.service.autofill.UserData
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,12 @@ sealed class Screen(val route: String, val friendlyName : String) {
     object Messages : Screen("messages", "Messages")
 
     object Favorites : Screen("favorites", "Favorites")
+
+    object Login : Screen("login", "Login")
+
+    object Registration : Screen("registration", "Register")
+    object ProfileQuiz : Screen("profileQuiz", "Profile Quiz")
+    object Splash : Screen("splash", "Splash")
 }
 
 class MainViewModel : ViewModel() {
@@ -24,7 +31,7 @@ class MainViewModel : ViewModel() {
         User.initializeInstance(Profile(profileID = "1", name = "Michael Robinson", schedule = "M W F", interests = "Bodybuilding", mainGym = "Georgia Tech Campus Recreational Center (CRC)", description = "Hello World"))
     }
     // LiveData or MutableState that holds the current Screen
-    private val _currentScreen = MutableLiveData<Screen>(Screen.Home)
+    private val _currentScreen = MutableLiveData<Screen>(Screen.Splash)
     val currentScreen: LiveData<Screen> = _currentScreen
     private val _showFAB = MutableLiveData(currentScreen.value == Screen.Home)
     val showFab: LiveData<Boolean> = _showFAB
@@ -32,12 +39,27 @@ class MainViewModel : ViewModel() {
     val user: LiveData<User> = _user
 
 
-
-    // Navigate to a specific screen
     fun navigateTo(screen: Screen) {
         _currentScreen.value = screen
         _showFAB.value = currentScreen.value == Screen.Home
     }
 
-    // Additional navigation logic as per the requirements...
+    // You would need functions to handle login, registration, and profile update.
+    fun login(username: String, password: String) {
+        // TODO: Implement login logic
+        // On success, navigate to Home
+        navigateTo(Screen.Home)
+    }
+
+    fun register(userData: UserData) {
+        // TODO: Implement registration logic
+        // On success, navigate to ProfileQuiz
+        navigateTo(Screen.ProfileQuiz)
+    }
+
+    fun saveUserProfile(profile: Profile) {
+        // TODO: Implement profile save logic
+        // On success, navigate to Home
+        navigateTo(Screen.Home)
+    }
 }

@@ -56,10 +56,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appprototype.ui.FavoritesScreen
 import com.example.appprototype.ui.HomeScreen
+import com.example.appprototype.ui.LoginScreen
 import com.example.appprototype.ui.MessagesScreen
+import com.example.appprototype.ui.ProfileQuizScreen
+import com.example.appprototype.ui.RegistrationScreen
+import com.example.appprototype.ui.SplashScreen
 import com.example.appprototype.ui.components.NavigationItem
 import com.example.appprototype.ui.components.drawerSheet
 import com.example.appprototype.ui.components.fontFamily
@@ -95,7 +101,10 @@ fun ScaffoldExample(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Home)
+    val currentScreen by mainViewModel.currentScreen.observeAsState(initial = Screen.Splash)
+
+    val isFeatureScreen = currentScreen is Screen.Home || currentScreen is Screen.Favorites || currentScreen is Screen.Messages
+
     val showFab = mainViewModel.showFab.observeAsState()
     val user by mainViewModel.user.observeAsState()
 
@@ -121,61 +130,63 @@ fun ScaffoldExample(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Column(
-                    modifier = Modifier
-                        .padding(20.dp)
-                ) {
-                    NavigationDrawerItem(
-                        label = {
-                            Image(Icons.Filled.ArrowBack, contentDescription = "Go Back")
-                        },
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        },
+            if (isFeatureScreen) {
+                ModalDrawerSheet {
+                    Column(
                         modifier = Modifier
-                            .width(60.dp)
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
-                        verticalAlignment = Alignment.Top,
+                            .padding(20.dp)
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.default_profile_icon),
-                            contentDescription = "User Profile",
-                            contentScale = ContentScale.FillBounds,
+                        NavigationDrawerItem(
+                            label = {
+                                Image(Icons.Filled.ArrowBack, contentDescription = "Go Back")
+                            },
+                            selected = false,
+                            onClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            },
                             modifier = Modifier
-                                .width(128.dp)
-                                .height(128.dp)
-                                .clip(CircleShape)
+                                .width(60.dp)
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                            verticalAlignment = Alignment.Top,
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.default_profile_icon),
+                                contentDescription = "User Profile",
+                                contentScale = ContentScale.FillBounds,
+                                modifier = Modifier
+                                    .width(128.dp)
+                                    .height(128.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                        Text(
+                            text = user!!.getDetails().name,
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                lineHeight = 32.sp,
+                                fontFamily = fontFamily,
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFF191C1D),
+
+                                letterSpacing = 0.5.sp,
+                            ),
+                            modifier = Modifier
+                                .width(248.dp)
+                                .height(36.dp)
                         )
                     }
-                    Text(
-                        text = user!!.getDetails().name,
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                            lineHeight = 32.sp,
-                            fontFamily = fontFamily,
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF191C1D),
-
-                            letterSpacing = 0.5.sp,
-                        ),
-                        modifier = Modifier
-                            .width(248.dp)
-                            .height(36.dp)
-                    )
+                    drawerSheet(drawerState = drawerState, scope = scope, null, items, itemsBottom)
                 }
-                drawerSheet(drawerState = drawerState, scope = scope, null, items, itemsBottom)
             }
         },
-        gesturesEnabled = true
+        gesturesEnabled = isFeatureScreen
     ) {
         Scaffold(
-            topBar = {
+            topBar = { if (isFeatureScreen) {
                 TopAppBar(
                     colors = TopAppBarDefaults.largeTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -184,7 +195,7 @@ fun ScaffoldExample(
                         actionIconContentColor = MaterialTheme.colorScheme.onSecondary,
                         scrolledContainerColor = MaterialTheme.colorScheme.onPrimaryContainer
                     ),
-                    title = { Text(text = currentScreen.friendlyName ) },
+                    title = { currentScreen.friendlyName },
                     navigationIcon = {
                         IconButton(
                             onClick = {
@@ -198,9 +209,11 @@ fun ScaffoldExample(
                             Icon(Icons.Default.Menu, contentDescription = null)
                         }
                     }
+
                 )
-            },
-            bottomBar = { BottomNavigationBar(mainViewModel = mainViewModel) },
+            }
+                     },
+            bottomBar = { if (isFeatureScreen) { BottomNavigationBar(mainViewModel = mainViewModel) } },
             floatingActionButton = {
                 if (showFab.value!!){
                     FloatingActionButton(onClick = { /*TODO*/ }) {
@@ -213,8 +226,12 @@ fun ScaffoldExample(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 when (currentScreen) {
-                    is Screen.Home -> HomeScreen ()
-                    is Screen.Messages -> MessagesScreen()
+                    is Screen.Splash -> SplashScreen(mainViewModel)
+                    is Screen.Login -> LoginScreen(mainViewModel)
+                    is Screen.Registration -> RegistrationScreen(mainViewModel)
+                    is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
+                    is Screen.Home -> HomeScreen()
+                    is Screen.Messages -> MessagesScreen(mainViewModel)
                     is Screen.Favorites -> FavoritesScreen()
                     else -> {}
                 }
@@ -236,7 +253,7 @@ fun BottomNavigationBar(mainViewModel: MainViewModel) {
         )
         NavigationBarItem(
             selected = currentScreen is Screen.Messages,
-            onClick = {mainViewModel.navigateTo(Screen.Messages)},
+            onClick = { mainViewModel.navigateTo(Screen.Messages) },
             icon = {Icon(painterResource(id = R.drawable.baseline_chat_24), contentDescription = "Messages")},
             label = { Text("Messages") }
         )
