@@ -1,5 +1,6 @@
 package com.example.appprototype.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +24,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.Visibility
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appprototype.viewmodels.MainViewModel
 import com.example.appprototype.viewmodels.Screen
@@ -38,38 +38,42 @@ fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
     var text by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        // Username field, password field, etc.
+    Box(
+        contentAlignment = Alignment.Center, // This centers the content within the Box
+        modifier = Modifier.fillMaxSize() // The Box will fill the entire available space
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            // Username field, password field, etc.
 
-        TextField(
-            value = text,
-            onValueChange = { text = it },
-            label = { Text("Email") },
-        )
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                label = { Text("Email") },
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
-            value = password,
-            onValueChange = {  password = it  },
-            label = { Text("Password") },
-            singleLine = true,
-            visualTransformation =
-            if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            trailingIcon = {
-                IconButton(onClick = { passwordHidden = !passwordHidden }) {
-                    val visibilityIcon =
-                        if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                    // Please provide localized description for accessibility services
-                    val description = if (passwordHidden) "Show password" else "Hide password"
-                    Icon(imageVector = visibilityIcon, contentDescription = description)
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                singleLine = true,
+                visualTransformation =
+                if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    IconButton(onClick = { passwordHidden = !passwordHidden }) {
+                        val visibilityIcon =
+                            if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                        val description = if (passwordHidden) "Show password" else "Hide password"
+                        Icon(imageVector = visibilityIcon, contentDescription = description)
+                    }
                 }
-            }
-        )
+            )
 
-        Button(onClick = { mainViewModel.navigateTo(Screen.Registration) }) {
-            Text("Log in")
+            Button(onClick = { mainViewModel.navigateTo(Screen.Home) }) {
+                Text("Log in")
+            }
         }
     }
 }
