@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(mainViewModel: MainViewModel) {
     // Side-effect to navigate after a delay
     LaunchedEffect(key1 = true) {
-        delay(1500) // For a 1.5-second delay
+        delay(1000) // For a 1.5-second delay
         mainViewModel.navigateTo(Screen.Login)
     }
 

@@ -3,7 +3,6 @@ package com.example.appprototype.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.appprototype.R
 import com.example.appprototype.viewmodels.MainViewModel
 
 @Composable
@@ -58,16 +56,18 @@ fun RegistrationScreen(mainViewModel: MainViewModel = viewModel()) {
 
 
         Text(
-            text = "Email",
+            text = "Name",
             style = MaterialTheme.typography.bodyLarge
         )
 
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = email,
-            onValueChange = { email = it },
-            placeholder = { Text(text = "email@address.com") },
+            value = name,
+            onValueChange = { name = it },
+            placeholder = { Text(text = "Full name") },
         )
+
+        Spacer(modifier = Modifier.padding(8.dp))
 
         Text(
             text = "Email",
@@ -89,6 +89,7 @@ fun RegistrationScreen(mainViewModel: MainViewModel = viewModel()) {
         )
 
         TextField(
+            modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
