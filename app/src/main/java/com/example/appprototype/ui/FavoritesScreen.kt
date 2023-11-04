@@ -1,11 +1,13 @@
 package com.example.appprototype.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +15,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appprototype.models.Profile
 import com.example.appprototype.ui.components.profileCard
@@ -39,20 +42,22 @@ fun FavoritesScreen(viewModel: HomeViewModel = viewModel()){
             viewModel.fetchList()
         }
     }
-
+    val favoriteProfiles = profileList.filter { it.isFavorite }
     Box(Modifier.pullRefresh(pullRefreshState)) {
-        LazyColumn(modifier = Modifier,
-            //verticalArrangement = Arrangement.spacedBy(100.dp)
-        ){
-            items(profileList) {profile ->
-                profileCard(
-                    onClick = {
-                        viewModel.viewedProfile.value = profile
-                        viewModel.showSheet()
-                    },
-                    profile = profile
-                )
+        if (favoriteProfiles.isNotEmpty()) {
+            LazyColumn(modifier = Modifier) {
+                items(favoriteProfiles) { profile ->
+                    profileCard(
+                        onClick = {
+                            viewModel.viewedProfile.value = profile
+                            viewModel.showSheet()
+                        },
+                        profile = profile
+                    )
+                }
             }
+        } else {
+            Text("You have no favorites.", modifier = Modifier.padding(16.dp))
         }
         PullRefreshIndicator(
             refreshing = isFetching!!,
