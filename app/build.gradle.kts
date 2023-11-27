@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.appprototype"
+    namespace = "com.gitmad.duofit"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.appprototype"
+        applicationId = "com.gitmad.duofit"
         minSdk = 33
         targetSdk = 33
         versionCode = 1

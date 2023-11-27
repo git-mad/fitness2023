@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AppPrototype"
+rootProject.name = "DuoFit"
 include(":app")
  
