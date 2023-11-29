@@ -12,7 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -32,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gitmad.duofit.R
 import com.gitmad.duofit.viewmodels.MainViewModel
+import com.gitmad.duofit.viewmodels.Screen
 
 @Composable
 
@@ -43,9 +48,22 @@ fun QuizScreenTemplate(
     textFieldPlaceholder: String,
     progressBarNumber: Int,
     totalDots: Int = 5,
-    onContinueClicked: (String) -> Unit
+    onContinueClicked: (String) -> Unit,
+    onBackClicked: (() -> Unit)? = null
 ) {
     var textFieldValue by rememberSaveable { mutableStateOf("") }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Only show the back button if there's a callback provided
+        onBackClicked?.let { onBack ->
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+            ) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -125,6 +143,7 @@ fun QuizScreenTemplatePreview() {
         textFieldPlaceholder = "Enter your name",
         progressBarNumber = 0,
         totalDots = 5,
-        onContinueClicked = {}
+        onContinueClicked = {},
+        onBackClicked = { MainViewModel().navigateTo(Screen.NameQuiz) }
     )
 }

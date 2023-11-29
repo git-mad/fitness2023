@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gitmad.duofit.models.Profile
 import com.gitmad.duofit.models.User
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 
 sealed class Screen(val route: String, val friendlyName : String) {
@@ -63,9 +65,23 @@ class MainViewModel : ViewModel() {
         navigateTo(Screen.ProfileQuiz)
     }
 
-    fun saveUserProfile(profile: Profile) {
-        // TODO: Implement profile save logic
-        // On success, navigate to Home
-        navigateTo(Screen.Home)
+    fun saveUserProfile() {
+        val db = Firebase.firestore
+
+        val user = User.getInstance().getDetails()
+        user?.let {
+            val userProfile = hashMapOf(
+                "name" to it.name,
+                "schedule" to it.schedule,
+                "description" to it.description,
+                "interests" to it.interests,
+                "mainGym" to it.mainGym
+            )
+
+            db.collection("users").document("1asdfj39sadf")
+                .set(userProfile)
+                .addOnSuccessListener { Log.d("INFO", "add to firebase success") }
+                .addOnFailureListener { Log.d("INFO", "add to firebase failure") }
+        }
     }
 }

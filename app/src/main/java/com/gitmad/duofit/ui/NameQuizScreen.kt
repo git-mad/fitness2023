@@ -43,7 +43,8 @@ fun ScheduleQuizScreen(mainViewModel: MainViewModel = MainViewModel()) {
         onContinueClicked = { string ->
             User.updateSchedule(string)
             mainViewModel.navigateTo(Screen.InterestsQuiz)
-        }
+        },
+        onBackClicked ={ mainViewModel.navigateTo(Screen.NameQuiz) }
     )
 }
 
@@ -61,7 +62,8 @@ fun InterestsQuizScreen(mainViewModel: MainViewModel = MainViewModel()) {
         onContinueClicked = { string ->
             User.updateInterests(string)
             mainViewModel.navigateTo(Screen.MainGymQuiz)
-        }
+        },
+        onBackClicked ={ mainViewModel.navigateTo(Screen.ScheduleQuiz) }
     )
 }
 
@@ -79,7 +81,8 @@ fun MainGymQuizScreen(mainViewModel: MainViewModel = MainViewModel()) {
         onContinueClicked = { string ->
             User.updateMainGym(string)
             mainViewModel.navigateTo(Screen.DescriptionQuiz)
-        }
+        },
+        onBackClicked ={ mainViewModel.navigateTo(Screen.InterestsQuiz) }
     )
 }
 
@@ -96,7 +99,11 @@ fun DescriptionQuizScreen(mainViewModel: MainViewModel = MainViewModel()) {
         totalDots = 5,
         onContinueClicked = { string ->
             User.updateDescription(string)
+            mainViewModel.saveUserProfile()
             mainViewModel.navigateTo(Screen.Home)
+        },
+        onBackClicked ={
+            mainViewModel.navigateTo(Screen.MainGymQuiz)
         }
     )
 }
