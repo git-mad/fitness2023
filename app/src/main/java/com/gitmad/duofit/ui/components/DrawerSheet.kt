@@ -65,7 +65,7 @@ private fun navigationItem(navigationItem: NavigationItem, drawerState: DrawerSt
         label = { Text(text = navigationItem.title) },
         selected = false,
         onClick = {
-            navigationItem.onClick
+            navigationItem.onClick()
             scope.launch {
                 drawerState.close()
             }

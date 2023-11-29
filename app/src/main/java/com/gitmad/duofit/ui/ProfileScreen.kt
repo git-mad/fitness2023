@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,7 +81,8 @@ fun ProfileScreen(
                         lineHeight = 28.sp,
                         fontFamily = fontFamily,
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF191C1D),
+                        color = LocalContentColor.current,
+                        //color = Color(0xFF191C1D),
 
                         letterSpacing = 0.5.sp,
                     ),
@@ -94,7 +96,8 @@ fun ProfileScreen(
                         lineHeight = 20.sp,
                         fontFamily = fontFamily,
                         fontWeight = FontWeight(500),
-                        color = Color(0xFF49454F),
+                        color = LocalContentColor.current,
+                        //color = Color(0xFF49454F),
                         letterSpacing = 0.5.sp,
                     ),
                 )
@@ -106,7 +109,8 @@ fun ProfileScreen(
                     lineHeight = 20.sp,
                     fontFamily = fontFamily,
                     fontWeight = FontWeight(400),
-                    color = Color(0xFF49454F),
+                    color = LocalContentColor.current,
+                    //color = Color(0xFF49454F),
                     letterSpacing = 0.25.sp,
                 ),
             )
@@ -124,7 +128,8 @@ fun ProfileScreen(
                         lineHeight = 20.sp,
                         fontFamily = fontFamily,
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF49454F),
+                        color = LocalContentColor.current,
+                        //color = Color(0xFF49454F),
                         letterSpacing = 0.25.sp,
                     ),
                 )
@@ -147,7 +152,9 @@ fun ProfileScreen(
                     .width(80.dp)
                     .height(80.dp)
                     .background(Color.Transparent),
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = LocalContentColor.current // Use LocalContentColor.current
+                    ),
                     shape = RectangleShape
                 ) {
                     Image(ImageVector.vectorResource(if (isStarred) R.drawable.pinkstar else R.drawable.star),

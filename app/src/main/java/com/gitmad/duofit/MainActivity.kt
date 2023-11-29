@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +21,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SpeakerNotesOff
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -122,8 +126,18 @@ fun MainScaffoldLayout(
         NavigationItem(
             title = "Settings",
             icon = Icons.Filled.Settings,
-            onClick = {}
-        )
+            onClick = {
+                println("hello")
+                mainViewModel.navigateTo(Screen.Home)
+            }
+        ),
+        NavigationItem(
+            title = "Log Out",
+            icon = Icons.Filled.Logout,
+            onClick = {
+                mainViewModel.navigateTo(Screen.Login)
+            }
+        ),
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -168,7 +182,7 @@ fun MainScaffoldLayout(
                                 lineHeight = 32.sp,
                                 fontFamily = fontFamily,
                                 fontWeight = FontWeight(400),
-                                color = Color(0xFF191C1D),
+                                color = LocalContentColor.current,
 
                                 letterSpacing = 0.5.sp,
                             ),
