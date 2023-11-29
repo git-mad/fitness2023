@@ -35,7 +35,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gitmad.duofit.R
 import com.gitmad.duofit.viewmodels.MainViewModel
 import com.gitmad.duofit.viewmodels.Screen
 import androidx.compose.material.icons.filled.Visibility
@@ -44,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gitmad.duofit.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -57,8 +57,8 @@ import kotlinx.coroutines.tasks.await
 
 
 @Composable
-@Preview
-fun LoginScreen(
+//@Preview
+fun LoginScreen2(
     mainViewModel: MainViewModel = viewModel(),
 ) {
 
@@ -107,68 +107,66 @@ fun LoginScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun LoginScreen2(mainViewModel: MainViewModel = MainViewModel()) {
+fun LoginScreen(mainViewModel: MainViewModel = MainViewModel()) {
     var name by rememberSaveable { mutableStateOf("") }
     var image by rememberSaveable { mutableStateOf<Bitmap?>(null) }
+    var user by remember { mutableStateOf(Firebase.auth.currentUser) }
+    var launcher = rememberFirebaseAuthLauncher(
+        onAuthComplete = { authResult ->
+            user = authResult.user
+        },
+        onAuthError = {
+            user = null
+        })
+    val token = stringResource(id = R.string.default_web_client_id)
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Welcome to DuoFit",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = "Connect with fitness enthusiasts and find your perfect workout partner.",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        if (user == null) {
+            Text(
+                text = "Welcome to DuoFit",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "Connect with fitness enthusiasts and find your perfect workout partner.",
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
 
-        Image(
-            painter = painterResource(R.drawable.trainer),
-            contentDescription = "Trainer",
-            modifier = Modifier.size(300.dp)
-        )
+            Image(
+                painter = painterResource(R.drawable.trainer),
+                contentDescription = "Trainer",
+                modifier = Modifier.size(300.dp)
+            )
 
-        Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
-        Button(
-            onClick = { mainViewModel.navigateTo(Screen.NameQuiz)
-            },
-        ) {
-            Text("Google Login")
-        }
-    }
-}
-
-
-
-@Composable
-fun rememberFirebaseAuthLauncher(
-    onAuthComplete: (AuthResult) -> Unit,
-    onAuthError: (ApiException) -> Unit
-) : ManagedActivityResultLauncher<Intent, ActivityResult> {
-    val scope = rememberCoroutineScope()
-    return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        try {
-            val account = task.getResult(ApiException::class.java)!!
-            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-            scope.launch {
-                val authResult = Firebase.auth.signInWithCredential(credential).await()
-                onAuthComplete(authResult)
-
+            Button(
+                onClick = {
+                    val gso =
+                        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestIdToken(token)
+                            .requestEmail()
+                            .build()
+                    val googleSignInClient = GoogleSignIn.getClient(context, gso)
+                    launcher.launch(googleSignInClient.signInIntent)
+                },
+            ) {
+                Text("Google Login")
             }
-        } catch (e: ApiException) {
-            onAuthError(e)
+        } else {
+            mainViewModel.navigateTo(Screen.NameQuiz)
         }
     }
 }
+
 
 @Composable
 fun rememberFirebaseAuthLauncher(
