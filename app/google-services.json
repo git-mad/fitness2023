@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "372081593955",
+    "project_id": "duofit-49c09",
+    "storage_bucket": "duofit-49c09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372081593955:android:dd85bec8f557c15af6f256",
+        "android_client_info": {
+          "package_name": "com.gitmad.duofit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFIOoBpJnhOLLcRgogm03dtE7L-xEps0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
