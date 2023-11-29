@@ -9,6 +9,8 @@ import com.gitmad.duofit.models.Profile
 import com.gitmad.duofit.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.installations.RandomFidGenerator
+import kotlin.random.Random
 
 
 sealed class Screen(val route: String, val friendlyName : String) {
@@ -67,6 +69,7 @@ class MainViewModel : ViewModel() {
 
     fun saveUserProfile() {
         val db = Firebase.firestore
+        val random = RandomFidGenerator()
 
         val user = User.getInstance().getDetails()
         user?.let {
@@ -78,7 +81,7 @@ class MainViewModel : ViewModel() {
                 "mainGym" to it.mainGym
             )
 
-            db.collection("users").document("1asdfj39sadf")
+            db.collection("users").document(random.createRandomFid())
                 .set(userProfile)
                 .addOnSuccessListener { Log.d("INFO", "add to firebase success") }
                 .addOnFailureListener { Log.d("INFO", "add to firebase failure") }
