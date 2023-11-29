@@ -57,13 +57,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.gitmad.duofit.ui.DescriptionQuizScreen
 import com.gitmad.duofit.ui.FavoritesScreen
 import com.gitmad.duofit.ui.HomeScreen
+import com.gitmad.duofit.ui.InterestsQuizScreen
 import com.gitmad.duofit.ui.LoginScreen
+import com.gitmad.duofit.ui.MainGymQuizScreen
 import com.gitmad.duofit.ui.MessagesScreen
+import com.gitmad.duofit.ui.NameQuizScreen
 import com.gitmad.duofit.ui.ProfileQuizScreen
 import com.gitmad.duofit.ui.RegistrationScreen
-import com.gitmad.duofit.ui.SplashScreen
+import com.gitmad.duofit.ui.ScheduleQuizScreen
 import com.gitmad.duofit.ui.components.NavigationItem
 import com.gitmad.duofit.ui.components.drawerSheet
 import com.gitmad.duofit.ui.components.fontFamily
@@ -225,12 +229,16 @@ fun MainScaffoldLayout(
             ) {
                 when (currentScreen) {
                     is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
-                    is Screen.Splash -> SplashScreen(mainViewModel)
                     is Screen.Login -> LoginScreen(mainViewModel)
                     is Screen.Registration -> RegistrationScreen(mainViewModel)
                     is Screen.Home -> HomeScreen()
                     is Screen.Messages -> MessagesScreen(mainViewModel)
                     is Screen.Favorites -> FavoritesScreen()
+                    is Screen.NameQuiz -> NameQuizScreen(mainViewModel)
+                    is Screen.InterestsQuiz -> InterestsQuizScreen(mainViewModel)
+                    is Screen.ScheduleQuiz -> ScheduleQuizScreen(mainViewModel)
+                    is Screen.DescriptionQuiz -> DescriptionQuizScreen(mainViewModel)
+                    is Screen.MainGymQuiz -> MainGymQuizScreen(mainViewModel)
                     else -> {}
                 }
             }

@@ -22,6 +22,13 @@ sealed class Screen(val route: String, val friendlyName : String) {
     object Registration : Screen("registration", "Register")
     object ProfileQuiz : Screen("profileQuiz", "Profile Quiz")
     object Splash : Screen("splash", "Splash")
+    object NameQuiz : Screen("nameQuiz", "Name Quiz")
+
+    object ScheduleQuiz : Screen("scheduleQuiz", "Schedule Quiz")
+    object InterestsQuiz : Screen("interestsQuiz", "Interests Quiz")
+    object MainGymQuiz : Screen("mainGymQuiz", "Main Gym Quiz")
+    object DescriptionQuiz : Screen("descriptionQuiz", "Description Quiz")
+
 }
 
 class MainViewModel : ViewModel() {
@@ -29,7 +36,7 @@ class MainViewModel : ViewModel() {
         User.initializeInstance(Profile(profileID = "1", name = "Michael Robinson", schedule = "M W F", interests = "Bodybuilding", mainGym = "Georgia Tech Campus Recreational Center (CRC)", description = "Hello World"))
     }
     // LiveData or MutableState that holds the current Screen
-    private val _currentScreen = MutableLiveData<Screen>(Screen.Splash)
+    private val _currentScreen = MutableLiveData<Screen>(Screen.Login)
     val currentScreen: LiveData<Screen> = _currentScreen
     private val _showFAB = MutableLiveData(currentScreen.value == Screen.Home)
     val showFab: LiveData<Boolean> = _showFAB
