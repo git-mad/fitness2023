@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "372081593955",
+    "firebase_url": "https://duofit-49c09-default-rtdb.firebaseio.com",
     "project_id": "duofit-49c09",
     "storage_bucket": "duofit-49c09.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "372081593955-9vkqireufb89fesfgr93posfadq8dstm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gitmad.duofit",
+            "certificate_hash": "0f2ebbf3d4f4523238037bc1b0fe7308e44e3310"
+          }
+        },
         {
           "client_id": "372081593955-je17m3oq0o3nle6urmmma56013psra6s.apps.googleusercontent.com",
           "client_type": 3
