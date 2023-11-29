@@ -12,7 +12,12 @@
           "package_name": "com.gitmad.duofit"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "372081593955-je17m3oq0o3nle6urmmma56013psra6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAFIOoBpJnhOLLcRgogm03dtE7L-xEps0A"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372081593955-je17m3oq0o3nle6urmmma56013psra6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
