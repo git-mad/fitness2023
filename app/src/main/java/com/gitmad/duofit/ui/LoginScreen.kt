@@ -34,46 +34,13 @@ import androidx.compose.material.icons.filled.VisibilityOff
 @Preview
 fun LoginScreen(mainViewModel: MainViewModel = viewModel()) {
 
-    var password by rememberSaveable { mutableStateOf("") }
-    var passwordHidden by rememberSaveable { mutableStateOf(true) }
-    var email by rememberSaveable { mutableStateOf("") }
-
     Box(
         contentAlignment = Alignment.Center, // This centers the content within the Box
         modifier = Modifier.fillMaxSize() // The Box will fill the entire available space
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            // Username field, password field, etc.
-
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                singleLine = true,
-                visualTransformation =
-                if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    IconButton(onClick = { passwordHidden = !passwordHidden }) {
-                        val visibilityIcon =
-                            if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                        val description = if (passwordHidden) "Show password" else "Hide password"
-                        Icon(imageVector = visibilityIcon, contentDescription = description)
-                    }
-                }
-            )
-
-            Button(onClick = { mainViewModel.navigateTo(Screen.Home) }) {
-                Text("Log in")
+            Button(onClick = { mainViewModel.navigateTo(Screen.ProfileQuiz) }) {
+                Text("Register (placeholder for google authentication)")
             }
         }
     }
-}
+

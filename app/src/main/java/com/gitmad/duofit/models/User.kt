@@ -18,9 +18,13 @@ class User private constructor(private var profile: Profile){
         }
         fun getInstance(): User =
             instance ?: throw IllegalStateException("Instance not initialized")
+
+        fun updateProfile(newProfile: Profile) {
+            synchronized(this) {
+                instance?.profile = newProfile
+            }
+        }
     }
-
     fun getDetails() : Profile = profile
-
 
 }

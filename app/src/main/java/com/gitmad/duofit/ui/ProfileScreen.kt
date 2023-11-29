@@ -1,6 +1,5 @@
 package com.gitmad.duofit.ui
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gitmad.duofit.R
@@ -59,8 +59,9 @@ fun ProfileImage(resID: Int) {
 }
 
 @Composable
+@Preview
 fun ProfileScreen(
-    profile: Profile,
+    profile: Profile = Profile(),
 ) {
     var isStarred by remember { mutableStateOf(false) }
     isStarred = profile.isFavorite

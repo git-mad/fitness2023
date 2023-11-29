@@ -8,12 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gitmad.duofit.viewmodels.MainViewModel
 import com.gitmad.duofit.viewmodels.Screen
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(mainViewModel: MainViewModel) {
+@Preview
+fun SplashScreen(mainViewModel: MainViewModel = viewModel()) {
     // Side-effect to navigate after a delay
     LaunchedEffect(key1 = true) {
         delay(1000) // For a 1.5-second delay

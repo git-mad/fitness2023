@@ -110,7 +110,7 @@ fun MainScaffoldLayout(
         NavigationItem(
             title = "Edit Profile",
             icon = Icons.Filled.Edit,
-            onClick = {}
+            onClick = { mainViewModel.navigateTo(Screen.ProfileQuiz) }
         ),
         NavigationItem(
             title = "Communities",
@@ -224,10 +224,10 @@ fun MainScaffoldLayout(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 when (currentScreen) {
+                    is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
                     is Screen.Splash -> SplashScreen(mainViewModel)
                     is Screen.Login -> LoginScreen(mainViewModel)
                     is Screen.Registration -> RegistrationScreen(mainViewModel)
-                    is Screen.ProfileQuiz -> ProfileQuizScreen(mainViewModel)
                     is Screen.Home -> HomeScreen()
                     is Screen.Messages -> MessagesScreen(mainViewModel)
                     is Screen.Favorites -> FavoritesScreen()

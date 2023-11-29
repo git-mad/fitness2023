@@ -1,6 +1,7 @@
 package com.gitmad.duofit.viewmodels
 
 import android.service.autofill.UserData
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,7 @@ class MainViewModel : ViewModel() {
     fun navigateTo(screen: Screen) {
         _currentScreen.value = screen
         _showFAB.value = currentScreen.value == Screen.Home
+        Log.d("INFO", "launched screen")
     }
 
     // You would need functions to handle login, registration, and profile update.
