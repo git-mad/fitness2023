@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.gitmad.duofit.models.Profile
 import com.gitmad.duofit.models.User
 import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.installations.RandomFidGenerator
 import kotlin.random.Random
@@ -71,6 +72,8 @@ class MainViewModel : ViewModel() {
         val db = Firebase.firestore
         val random = RandomFidGenerator()
 
+
+
         val user = User.getInstance().getDetails()
         user?.let {
             val userProfile = hashMapOf(
@@ -81,10 +84,12 @@ class MainViewModel : ViewModel() {
                 "mainGym" to it.mainGym
             )
 
-            db.collection("users").document(random.createRandomFid())
-                .set(userProfile)
-                .addOnSuccessListener { Log.d("INFO", "add to firebase success") }
-                .addOnFailureListener { Log.d("INFO", "add to firebase failure") }
+            Firebase.auth.currentUser?.let { it1 ->
+                db.collection("users").document(it1.uid)
+                    .set(userProfile)
+                    .addOnSuccessListener { Log.d("INFO", "add to firebase success") }
+                    .addOnFailureListener { Log.d("INFO", "add to firebase failure") }
+            }
         }
     }
 }
