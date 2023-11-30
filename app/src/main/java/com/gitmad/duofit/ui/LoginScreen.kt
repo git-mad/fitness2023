@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +52,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -120,6 +123,7 @@ fun LoginScreen(mainViewModel: MainViewModel = MainViewModel()) {
         })
     val token = stringResource(id = R.string.default_web_client_id)
     val context = LocalContext.current
+    Firebase.auth.signOut()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -162,6 +166,28 @@ fun LoginScreen(mainViewModel: MainViewModel = MainViewModel()) {
                 Text("Google Login")
             }
         } else {
+
+            val db = Firebase.firestore
+
+            Firebase.auth.currentUser?.let { currentUser ->
+                val userDocRef = db.collection("users").document(currentUser.uid)
+                userDocRef.get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Check if document exists
+                        val document = task.result
+                        if (document != null && document.exists()) {
+                            // User exists, navigate to homescreen
+                            mainViewModel.navigateTo(Screen.Home)
+                        } else {
+                            mainViewModel.navigateTo(Screen.NameQuiz)
+                        }
+                    } else {
+                        Log.d("ERROR", "Failed to check user existence: ", task.exception)
+                    }
+                }
+            }
+        } ?: run {
+            // If user is null, navigate to namequiz
             mainViewModel.navigateTo(Screen.NameQuiz)
         }
     }
